@@ -1,0 +1,78 @@
+import Bicis.*
+import Accesorios.*
+import Depositos.*
+
+describe "Bicis en sus depositos" {
+
+	const bici1 = new Bici(rodado = 28, largoEnCm = 150, marca = "Olmo")
+	const bici2 = new Bici(rodado = 26, largoEnCm = 110, marca = "Legnano")
+	const bici3 = new Bici(rodado = 20, largoEnCm = 90, marca = "Legnano")
+	const bici4 = new Bici(rodado = 24, largoEnCm = 200, marca = "Olmo")
+	const farol1 = new Farolito()
+	const farol2 = new Farolito()
+	const canasto1 = new Canasto(volumen = 8)
+	const morral1 = new MorralDeBici(largoEnCm = 21, tieneOjoDeGato = true)
+	const morral2 = new MorralDeBici(largoEnCm = 6, tieneOjoDeGato = false) 
+	const deposito1 = new Deposito()
+	const deposito2 = new Deposito()
+	
+	fixture {
+		
+		bici1.agregarAccesorios(farol1)
+		bici2.agregarAccesorios(canasto1)
+		bici2.agregarAccesorios(farol2)
+		bici2.agregarAccesorios(morral1)
+		bici3.agregarAccesorios(morral2)
+		deposito1.agregarBici(bici1)	
+		deposito1.agregarBici(bici2)
+		deposito2.agregarBici(bici3)
+		deposito2.agregarBici(bici4)
+	
+	}
+	
+	test "Cuáles son rápidas" {
+		
+		assert.equals(#{ bici1, bici2 },deposito1.bicisRapidas())
+		assert.equals(#{ bici4 },deposito2.bicisRapidas())
+		
+	}
+	
+	test "Sus marcas" {
+		
+		assert.equals(#{ "Olmo", "Legnano" },deposito1.marcaBicis())
+		assert.equals(#{ "Olmo", "Legnano" },deposito2.marcaBicis())
+		
+	}
+	
+	test "Cuáles son nocturnas" {
+		
+		assert.that(deposito1.esNocturno())
+		assert.notThat(deposito2.esNocturno())
+	}
+	
+	test "La marca más rápida del depósito" {
+		
+		assert.equals("Olmo",deposito1.marcaMasRapida())
+		assert.equals("Olmo",deposito2.marcaMasRapida())
+		
+	}
+	
+	test "La carga de las bicis largas" {
+		
+		assert.equals(0,deposito1.cargaTotalBicisLargas())
+		assert.equals(0,deposito2.cargaTotalBicisLargas())
+		
+		
+	}
+	
+	test "Bicis sin Accesorios" {
+		
+		assert.equals(0,deposito1.cantidadBicisSinAccesorios())
+		assert.equals(1,deposito2.cantidadBicisSinAccesorios())
+		
+	}
+
+	
+}	
+	
+	

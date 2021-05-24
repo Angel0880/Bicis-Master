@@ -1,0 +1,81 @@
+import Bicis.*
+import Accesorios.*
+
+describe "Bicis y Accesorios" {
+
+	const bici1 = new Bici(rodado = 28, largoEnCm = 150, marca = "Olmo")
+	const bici2 = new Bici(rodado = 26, largoEnCm = 110, marca = "Legnano")
+	const bici3 = new Bici(rodado = 20, largoEnCm = 90, marca = "Legnano")
+	const bici4 = new Bici(rodado = 24, largoEnCm = 200, marca = "Olmo")
+	const farol1 = new Farolito()
+	const farol2 = new Farolito()
+	const canasto1 = new Canasto(volumen = 8)
+	const morral1 = new MorralDeBici(largoEnCm = 21, tieneOjoDeGato = true)
+	const morral2 = new MorralDeBici(largoEnCm = 6, tieneOjoDeGato = false) 
+	
+	fixture {
+		
+		bici1.agregarAccesorios(farol1)
+		bici2.agregarAccesorios(canasto1)
+		bici2.agregarAccesorios(farol2)
+		bici2.agregarAccesorios(morral1)
+		bici3.agregarAccesorios(morral2)
+		
+	}
+	
+	test "Altura de las bicis" {
+		
+		assert.equals(85,bici1.altura())
+		assert.equals(80,bici2.altura())
+		assert.equals(65,bici3.altura())
+		assert.equals(75,bici4.altura())
+		
+	}
+	
+	test "Velocidad de las bicis" {
+		
+		assert.equals(34,bici1.velocidadCrucero())
+		assert.equals(28,bici2.velocidadCrucero())
+		assert.equals(22,bici3.velocidadCrucero())
+		assert.equals(30,bici4.velocidadCrucero())
+		
+	}
+	
+	test "Carga de las bicis" {
+		
+		assert.equals(0,bici1.carga())
+		assert.equals(23,bici2.carga())
+		assert.equals(2,bici3.carga())
+		assert.equals(0,bici4.carga())
+		
+	}
+	
+	test "Peso de las bicis" {
+		
+		assert.equals(14.5,bici1.peso())
+		assert.equals(15.5,bici2.peso())
+		assert.equals(11.2,bici3.peso())
+		assert.equals(12,bici4.peso())
+		
+	}
+	
+	test "Bicis con o sin luz" {
+		
+		assert.that(bici1.tieneLuz())
+		assert.that(bici2.tieneLuz())
+		assert.notThat(bici3.tieneLuz())
+		assert.notThat(bici4.tieneLuz())
+		
+	}
+	
+	test "Cantidad de accesorios livianos en cada bici" {
+		
+		assert.equals(1,bici1.cantidadAccesoriosLivianos())
+		assert.equals(2,bici2.cantidadAccesoriosLivianos())
+		assert.equals(0,bici3.cantidadAccesoriosLivianos())
+		assert.equals(0,bici4.cantidadAccesoriosLivianos())
+		
+	}
+	
+	
+}
